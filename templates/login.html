@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+</head>
+<body>
+	{% if error %}
+        <p><b>Error</b>: {{error}}</p>
+	{% endif %}
+	
+	<form method = "post" action = "{{ url_for('login') }}">
+        <table>
+            <tr>
+				<td>Email</td>
+				<td><input type='email' name='email'></td>
+			</tr>
+
+            <tr>
+				<td>Password</td>
+				<td><input type='password' name='pwd'></td>
+			</tr>
+			
+            <tr><td><input type="submit" value="Submit"></td></tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,6 +1,8 @@
 import os
 
+from flask import abort
 from flask import Flask
+from flask import flash
 from flask import make_response
 from flask import render_template
 from flask import redirect 
@@ -16,7 +18,7 @@ UPLOAD_FOLDER = 'files'
 
 # Configurações para a aplicação Flask
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024 # 3mb
 # Configura a SECRET_KEY, necessária para as sessions
 app.secret_key = b'\xa2\xec\xb0\xb6\xf6(\x8e@\xbe\r&\xa6\xc0\xe22h'
 
@@ -27,17 +29,20 @@ def index():
     # Que retorna "Hello World!"
 	return "Hello World!"
 
+
 # Cria uma rota dinámica em que o nome é uma string que pode váriar
 @app.route('/home/<name>')
 # Passa o paramêtro da url para a função
 def home(name):
 	return "Hello, " + name
 
+
 # Especifíca o paramêtro para integer
 @app.route('/age/<int:age>')
 def age(age):
     # Formata String
 	return "Idade: %d"%age
+
 
 # No lugar de criar uma rota com o decorator cria somente a função
 def about():
@@ -96,6 +101,10 @@ def printData():
         result = request.form
         
         return render_template("showData.html", result=result)
+    # Retorna para uma página de erro com status code 401
+    abort(401)
+    # É possível mudar a mensagem de erro
+    # abort(401, description="Não permitido")
 
 
 @app.route('/cookie')
@@ -142,6 +151,23 @@ def filePost():
 
         return render_template('uploadedFile.html', name = filename)
 
+
+@app.route('/homelogin')  
+def homeLogin():  
+    return render_template("homeLogin.html")
+ 
+@app.route('/login', methods = ['GET', 'POST'])  
+def login():  
+    error = None;  
+    if request.method == "POST":  
+        if request.form['pwd'] == '123456':
+            # Flash é uma forma de enviar uma mensagem para a view, o tempo de vida do flash é de um request pro outro.
+            flash("Bem vindo")  
+            return redirect(url_for('homeLogin'))  
+
+        error = "Usuário ou senha inválido"   
+            
+    return render_template('login.html', error=error)  
 
 if __name__ == "__main__": # Executa app.run() quando chamar python app.py
 	app.run(debug=True)
