@@ -1,3 +1,4 @@
+"""Arquivo principal da aplicacao em flask, as configuracoes e a inicializacao acontece aqui"""
 import os
 
 from flask import abort
@@ -34,14 +35,16 @@ def index():
 @app.route('/home/<name>')
 # Passa o paramêtro da url para a função
 def home(name):
-	return "Hello, " + name
+    """Pega um parametro da url e apresenta na tela"""
+    return "Hello, " + name
 
 
 # Especifíca o paramêtro para integer
 @app.route('/age/<int:age>')
 def age(age):
+    """Função que pega o parametro inteiro da url e apresenta na tela"""
     # Formata String
-	return "Idade: %d"%age
+    return "Idade: %d"%age
 
 
 # No lugar de criar uma rota com o decorator cria somente a função
@@ -68,6 +71,7 @@ def student():
 
 @app.route('/user/<name>')
 def user(name):
+    """Função para redirecionar para outras funções de acordo com o parametro da url"""
     if name == 'admin':
         # Função para redirecionar para a função com o nome admin
         return redirect(url_for('admin'))
@@ -79,6 +83,7 @@ def user(name):
 
 @app.route('/hello/<user>')
 def message(user):
+    """Pega um parametro e envia para um template"""
     # Passar um objeto para o template
     return render_template('message.html', name=user)
 
@@ -90,12 +95,14 @@ def table(num):
 
 @app.route('/signup')
 def signUpForm():
+    """Registrar"""
     return render_template('singup.html')
 
 
 # Cria 2 rotas success, uma para POST e outra para GET
 @app.route('/success', methods=['POST', 'GET'])
 def printData():
+    """Processa a informações do registro"""
     if request.method == 'POST':
         # O .form é um dicionário que contem um par de chave-valor vindo dos parametros do form
         result = request.form
@@ -109,6 +116,7 @@ def printData():
 
 @app.route('/cookie')
 def cookie():
+    """Cria um cookie"""
     # Função make_response converte o valor de uma view para uma instância response
     res = make_response("<h1>Cookie is set</h1>")
     # set_cookie é uma função da classe response, serve para armazenar a informação em um cookie(nome, conteudo, tempo de vida)
@@ -118,6 +126,7 @@ def cookie():
 
 @app.route('/session')
 def testSession():
+    """Cria uma session"""
     res = make_response("<p>Variável da sessão criada, <a href='/get'>get variable</a></p>")
     session['response'] = 'session#1'
     
@@ -126,6 +135,7 @@ def testSession():
 
 @app.route('/get')
 def getVariable():
+    """Pega uma session armazenada na aplicação"""
     if 'response' in session:
         s = session['response']
         
@@ -134,11 +144,13 @@ def getVariable():
 
 @app.route('/upload')
 def upload():
+    """Formulario de upload"""
     return render_template("uploadForm.html")
 
 
 @app.route('/uploadPost', methods=['POST'])
 def filePost():
+    """Processa as informações do upload e armazena o arquivo"""
     if request.method == 'POST':
         # Pega as informações do arquivo enviado pelo formulário
         f = request.files['file']
@@ -153,11 +165,13 @@ def filePost():
 
 
 @app.route('/homelogin')  
-def homeLogin():  
+def homeLogin():
+    """Tela de login""" 
     return render_template("homeLogin.html")
  
 @app.route('/login', methods = ['GET', 'POST'])  
-def login():  
+def login():
+    """Processa o login e retorna uma mensagem de boas vindas"""  
     error = None;  
     if request.method == "POST":  
         if request.form['pwd'] == '123456':
@@ -170,4 +184,5 @@ def login():
     return render_template('login.html', error=error)  
 
 if __name__ == "__main__": # Executa app.run() quando chamar python app.py
-	app.run(debug=True)
+    """Executa a aplicacao Flask"""
+    app.run(debug=True)
