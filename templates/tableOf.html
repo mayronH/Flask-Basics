@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Tabuada de {{ n }}</title>
-</head>
-<body>
-	<h1>Tabuada de {{ n }}</h1>
-	<!-- Demilitador permite utilizar funcionalidades do python -->
-	{% for i in range(1,11) %}
-		<h2> {{ n }} x {{ i }} = {{ n * i }} </h2>
-	{% endfor %}
-</body>
+    <head>
+        <title>Tabuada de {{ n }}</title>
+    </head>
+    <body>
+        <h1>Tabuada de {{ n }}</h1>
+        <!-- Demilitador permite utilizar funcionalidades do python -->
+        {% for i in range(1,11) %}
+        <h2>{{ n }} x {{ i }} = {{ n * i }}</h2>
+        {% endfor %}
+    </body>
 </html>

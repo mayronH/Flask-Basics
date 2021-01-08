@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Message</title>
-		<!-- Carregar arquivos estáticos -->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-	</head>
-	<body>
-		<main>
-			<h1>Olá, {{ name }}</h1>
-		</main>
-	</body>
+    <head>
+        <title>Message</title>
+        <!-- Carregar arquivos estáticos -->
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+    </head>
+    <body>
+        <main>
+            <h1>Olá, {{ name }}</h1>
+        </main>
+    </body>
 </html>
